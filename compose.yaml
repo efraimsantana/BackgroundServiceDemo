@@ -1,0 +1,22 @@
+﻿services:
+  backgroundservicedemo:
+    image: backgroundservicedemo
+    build:
+      context: .
+      dockerfile: BackgroundServiceDemo/Dockerfile
+    environment:
+      - ConnectionStrings__Redis=redis:6379
+    depends_on:
+      - redis
+    restart: on-failure
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: on-failure
+
+volumes:
+  redis-data:
